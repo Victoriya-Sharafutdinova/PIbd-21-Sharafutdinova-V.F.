@@ -7,13 +7,6 @@ using System.Drawing;
 
 namespace WindowsFormsCars
 {
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
     public class Ship
     {
         private float _startPosX;
