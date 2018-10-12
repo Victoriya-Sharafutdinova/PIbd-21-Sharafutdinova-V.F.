@@ -12,7 +12,7 @@ namespace WindowsFormsCars
 {
     public partial class FormShip : Form
     {
-        private Ship ship;
+        private ITransport ship;
 
         public FormShip()
         {
@@ -26,14 +26,21 @@ namespace WindowsFormsCars
             ship.DrawShip(gr);
             pictureBoxShip.Image = bmp;
         }
-        private void buttonCreate_Click(object sender, EventArgs e)
+        private void buttonCreateSimpleShip_Click_1(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            ship = new Ship(rnd.Next(100, 300), rnd.Next(1000,2000), Color.Blue, Color.White);
+            ship = new SimpleShip(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue);
             ship.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxShip.Width, pictureBoxShip.Height);
             Draw();
         }
-         private void buttonMove_Click(object sender, EventArgs e)
+        private void buttonCreateShip_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            ship = new Ship(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.White);
+            ship.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxShip.Width, pictureBoxShip.Height);
+            Draw();
+        }
+        private void buttonMove_Click(object sender, EventArgs e)
         {
             string name = (sender as Button).Name;
             switch (name)
