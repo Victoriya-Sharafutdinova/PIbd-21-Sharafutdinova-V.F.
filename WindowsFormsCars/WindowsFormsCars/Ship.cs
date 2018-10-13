@@ -38,6 +38,16 @@ namespace WindowsFormsCars
             g.FillRectangle(brBlack, _startPosX + 20, _startPosY - 10, 10, 10);
             g.FillRectangle(brRed, _startPosX + 40, _startPosY - 10, 10, 10);
             g.FillRectangle(brGray, _startPosX + 50, _startPosY - 10, 10, 10);
+
+            Pen pen = new Pen(Color.Black);
+            Brush br = new SolidBrush(DopColor);
+            Point point1 = new Point((int)_startPosX, (int)_startPosY + 20);
+            Point point2 = new Point((int)_startPosX + 90, (int)_startPosY + 20);
+            Point point3 = new Point((int)_startPosX + 82, (int)_startPosY + 35);
+            Point point4 = new Point((int)_startPosX + 10, (int)_startPosY + 35);
+            Point[] curvePoints = { point1, point2, point3, point4 };
+            g.FillPolygon(br, curvePoints);
+            g.DrawPolygon(pen, curvePoints);
         }
     }
 }
