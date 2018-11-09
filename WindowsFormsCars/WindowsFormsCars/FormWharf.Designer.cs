@@ -36,6 +36,9 @@
             this.buttonTakeShip = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.listBoxLevels = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWharf)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakeShip)).BeginInit();
@@ -51,9 +54,9 @@
             // 
             // buttonSetSimpleShip
             // 
-            this.buttonSetSimpleShip.Location = new System.Drawing.Point(1033, 12);
+            this.buttonSetSimpleShip.Location = new System.Drawing.Point(990, 167);
             this.buttonSetSimpleShip.Name = "buttonSetSimpleShip";
-            this.buttonSetSimpleShip.Size = new System.Drawing.Size(113, 83);
+            this.buttonSetSimpleShip.Size = new System.Drawing.Size(166, 67);
             this.buttonSetSimpleShip.TabIndex = 1;
             this.buttonSetSimpleShip.Text = "Припарковать корабль";
             this.buttonSetSimpleShip.UseVisualStyleBackColor = true;
@@ -61,9 +64,9 @@
             // 
             // buttonSetShip
             // 
-            this.buttonSetShip.Location = new System.Drawing.Point(1033, 101);
+            this.buttonSetShip.Location = new System.Drawing.Point(990, 240);
             this.buttonSetShip.Name = "buttonSetShip";
-            this.buttonSetShip.Size = new System.Drawing.Size(113, 87);
+            this.buttonSetShip.Size = new System.Drawing.Size(166, 70);
             this.buttonSetShip.TabIndex = 2;
             this.buttonSetShip.Text = "Припарковать корабль-контейнеровоз";
             this.buttonSetShip.UseVisualStyleBackColor = true;
@@ -75,7 +78,7 @@
             this.groupBox1.Controls.Add(this.buttonTakeShip);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.maskedTextBox1);
-            this.groupBox1.Location = new System.Drawing.Point(1008, 276);
+            this.groupBox1.Location = new System.Drawing.Point(1008, 316);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(138, 240);
             this.groupBox1.TabIndex = 3;
@@ -116,11 +119,24 @@
             this.maskedTextBox1.Size = new System.Drawing.Size(62, 22);
             this.maskedTextBox1.TabIndex = 6;
             // 
+            // listBoxLevels
+            // 
+            this.listBoxLevels.FormattingEnabled = true;
+            this.listBoxLevels.ItemHeight = 16;
+            this.listBoxLevels.Location = new System.Drawing.Point(1002, 0);
+            this.listBoxLevels.Name = "listBoxLevels";
+            this.listBoxLevels.Size = new System.Drawing.Size(144, 84);
+            this.listBoxLevels.TabIndex = 4;
+            this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
+            // 
             // FormWharf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1158, 557);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonSetShip);
             this.Controls.Add(this.buttonSetSimpleShip);
@@ -146,5 +162,8 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.PictureBox pictureBoxTakeShip;
         protected System.Windows.Forms.Button buttonSetSimpleShip;
+        private System.Windows.Forms.ListBox listBoxLevels;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
