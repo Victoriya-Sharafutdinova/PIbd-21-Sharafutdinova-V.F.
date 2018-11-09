@@ -12,68 +12,97 @@ namespace WindowsFormsCars
 {
     public partial class FormWharf : Form
     {
-        Wharf<ITransport> wharf;
+        MultiLevelWharf wharf;
+        private const int countLevel = 5;
 
         public FormWharf()
         {
             InitializeComponent();
-            wharf = new Wharf<ITransport>(20, pictureBoxWharf.Width, pictureBoxWharf.Height);
-            Draw();
+            wharf = new MultiLevelWharf(countLevel, pictureBoxWharf.Width, pictureBoxWharf.Height);
+            for(int i = 0; i < countLevel; i++)
+            {
+                listBoxLevels.Items.Add("Уровень " + (i + 1));
+            }
+            listBoxLevels.SelectedIndex = 0;
         }
 
         private void Draw()
         {
-            Bitmap bmp = new Bitmap(pictureBoxWharf.Width, pictureBoxWharf.Height);
-            Graphics gr = Graphics.FromImage(bmp);
-            wharf.Draw(gr);
-            pictureBoxWharf.Image = bmp;
+            if(listBoxLevels.SelectedIndex > -1)
+            {
+                Bitmap bmp = new Bitmap(pictureBoxWharf.Width, pictureBoxWharf.Height);
+                Graphics gr = Graphics.FromImage(bmp);
+                wharf[listBoxLevels.SelectedIndex].Draw(gr);
+                pictureBoxWharf.Image = bmp;
+            }          
         }
 
         private void buttonSetShip_Click_1(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == DialogResult.OK)
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    var ship = new Ship(100, 1000, dialog.Color, dialogDop.Color);
-                    int place = wharf + ship;
-                    Draw();
+                    ColorDialog dialogDop = new ColorDialog();
+                    if (dialogDop.ShowDialog() == DialogResult.OK)
+                    {
+                        var ship = new Ship(100, 1000, dialog.Color, dialogDop.Color);
+                        int place = wharf[listBoxLevels.SelectedIndex] + ship;
+                        if (place == -1)
+                        {
+                            MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        Draw();
+                    }
                 }
-            }
+            }          
         }
 
         private void buttonSetSimpleShip_Click_1(object sender, EventArgs e)
         {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (listBoxLevels.SelectedIndex > -1)
             {
-                var ship = new SimpleShip(100, 1000, dialog.Color);
-                int place = wharf + ship;
-                Draw();
+                ColorDialog dialog = new ColorDialog();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var ship = new SimpleShip(100, 1000, dialog.Color);
+                    int place = wharf[listBoxLevels.SelectedIndex] + ship;
+                    if(place == -1)
+                    {
+                        MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    Draw();
+                }
             }
         }
         private void buttonTakeShip_Click_1(object sender, EventArgs e)
         {
-            if (maskedTextBox1.Text != "")
+            if(listBoxLevels.SelectedIndex > -1)
             {
-                var ship = wharf - Convert.ToInt32(maskedTextBox1.Text);
-                if (ship != null)
+                if (maskedTextBox1.Text != "")
                 {
-                    Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
-                    Graphics gr = Graphics.FromImage(bmp);
-                    ship.SetPosition(5, 15, pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
-                    ship.DrawShip(gr);
-                    pictureBoxTakeShip.Image = bmp;
+                    var ship = wharf[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBox1.Text);
+                    if (ship != null)
+                    {
+                        Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
+                        Graphics gr = Graphics.FromImage(bmp);
+                        ship.SetPosition(5, 15, pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
+                        ship.DrawShip(gr);
+                        pictureBoxTakeShip.Image = bmp;
+                    }
+                    else
+                    {
+                        Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
+                        pictureBoxTakeShip.Image = bmp;
+                    }
+                    Draw();
                 }
-                else
-                {
-                    Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
-                    pictureBoxTakeShip.Image = bmp;
-                }
-                Draw();
-            }
+            }      
         }
+        private void listBoxLevels_SelectedIndexChanged (object sender, EventArgs e)
+        {
+            Draw();
+        }      
     }
 }

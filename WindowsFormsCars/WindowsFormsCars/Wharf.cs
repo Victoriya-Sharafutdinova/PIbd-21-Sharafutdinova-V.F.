@@ -9,28 +9,30 @@ namespace WindowsFormsCars
 {
     class Wharf<T> where T : class, ITransport
     {
-        private T[] _places;
+        private Dictionary<int,T> _places;
+        private int _maxCount;
         private int PictureWidth { get; set; }
         private int PictureHeight { get; set; }
         private int _placeSizeWidth = 210;
         private int _placeSizeHeight = 80;
         public Wharf(int sizes, int pictureWidth, int pictureHeight)
         {
-            _places = new T[sizes];
+            _maxCount = sizes;
+            _places = new Dictionary<int, T>();
             PictureWidth = pictureWidth;
             PictureHeight = pictureHeight;
-            for (int i = 0; i < _places.Length; i++)
-            {
-                _places[i] = null;
-            }
         }
         public static int operator +(Wharf<T> p, T ship)
         {
-            for (int i = 0; i < p._places.Length; i++)
+            if (p._places.Count == p._maxCount)
+            {
+                return -1;
+            }
+            for (int i = 0; i < p._maxCount; i++)
             {
                 if (p.CheckFreePlace(i))
                 {
-                    p._places[i] = ship;
+                    p._places.Add(i,ship);
                     p._places[i].SetPosition(10 + i / 5 * p._placeSizeWidth + 5, i % 5 * p._placeSizeHeight + 20, p.PictureWidth, p.PictureHeight);
                     return i;
                 }
@@ -40,14 +42,10 @@ namespace WindowsFormsCars
 
         public static T operator -(Wharf<T> p, int index)
         {
-            if (index < 0 || index > p._places.Length)
-            {
-                return null;
-            }
             if (!p.CheckFreePlace(index))
             {
                 T ship = p._places[index];
-                p._places[index] = null;
+                p._places.Remove(index);
                 return ship;
             }
             return null;
@@ -55,29 +53,27 @@ namespace WindowsFormsCars
 
         private bool CheckFreePlace(int index)
         {
-            return _places[index] == null;
+            return !_places.ContainsKey(index);
         }
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            var keys = _places.Keys.ToList();
+            for (int i = 0; i < keys.Count; i++)
             {
-                if (!CheckFreePlace(i))
-                {//если место не пустое      
-                    _places[i].DrawShip(g);
-                }
+                _places[keys[i]].DrawShip(g);
             }
         }
         private void DrawMarking(Graphics g)
         {
             Pen pen = new Pen(Color.Black, 3);
             //границы праковки             
-            g.DrawRectangle(pen, 0, 0, (_places.Length / 5) * _placeSizeWidth, 480);
-            for (int i = 0; i < _places.Length / 5; i++)
+            g.DrawRectangle(pen, 0, 0, (_maxCount / 5) * _placeSizeWidth, 480);
+            for (int i = 0; i < _maxCount / 5; i++)
             {//отрисовываем, по 5 мест на линии   
                 for (int j = 0; j < 6; ++j)
                 {//линия рамзетки места     
-                    g.DrawRectangle(pen, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5);
+                    g.DrawRectangle(pen, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5 );
                     Brush brGray = new SolidBrush(Color.Gray);
                     g.FillRectangle(brGray, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5);
                     //g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + 110, j * _placeSizeHeight);
@@ -85,5 +81,5 @@ namespace WindowsFormsCars
                 g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 400);
             }
         }
-    }
+     }
 }

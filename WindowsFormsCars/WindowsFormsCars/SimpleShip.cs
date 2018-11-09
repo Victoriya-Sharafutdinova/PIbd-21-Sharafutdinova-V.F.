@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
 
 namespace WindowsFormsCars
 {
     class SimpleShip : Boat
-    {
+    {       
         protected const int shipWidth = 100;
         protected const int shipHeight = 60;
         public SimpleShip(int maxSpeed, float weight, Color mainColor)
@@ -17,7 +17,7 @@ namespace WindowsFormsCars
             Weight = weight;
             MainColor = mainColor;
         }
-
+       
         public override void MoveTransport(Direction direction)
         {
             float step = MaxSpeed * 100 / Weight;
@@ -66,4 +66,4 @@ namespace WindowsFormsCars
             g.DrawRectangle(pen, _startPosX + 70, _startPosY - 10, 15, 30);
         }
     }
- }
+}

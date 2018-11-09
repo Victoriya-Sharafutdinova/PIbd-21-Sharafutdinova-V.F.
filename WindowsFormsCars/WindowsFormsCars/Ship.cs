@@ -10,11 +10,11 @@ namespace WindowsFormsCars
     class Ship : SimpleShip
     {
         public Color DopColor { private set; get; }
-        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base(maxSpeed, weight, mainColor)
-        {
+        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base (maxSpeed, weight, mainColor)
+        {            
             DopColor = dopColor;
         }
-
+        
         public override void DrawShip(Graphics g)
         {
             base.DrawShip(g);

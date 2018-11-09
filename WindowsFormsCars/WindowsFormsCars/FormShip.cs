@@ -21,6 +21,7 @@ namespace WindowsFormsCars
 
         private void Draw()
         {
+            Random rnd = new Random();
             Bitmap bmp = new Bitmap(pictureBoxShip.Width, pictureBoxShip.Height);
             Graphics gr = Graphics.FromImage(bmp);
             ship.DrawShip(gr);
@@ -36,11 +37,11 @@ namespace WindowsFormsCars
         private void buttonCreateShip_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            ship = new Ship(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.White);
+            ship = new Ship(rnd.Next(100, 300), rnd.Next(1000,2000), Color.Blue, Color.White);
             ship.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxShip.Width, pictureBoxShip.Height);
-            Draw();
+            Draw(); 
         }
-        private void buttonMove_Click(object sender, EventArgs e)
+         private void buttonMove_Click(object sender, EventArgs e)
         {
             string name = (sender as Button).Name;
             switch (name)
@@ -59,6 +60,6 @@ namespace WindowsFormsCars
                     break;
             }
             Draw();
-        }
+        }      
     }
 }
