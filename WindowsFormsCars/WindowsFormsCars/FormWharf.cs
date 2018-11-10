@@ -13,6 +13,7 @@ namespace WindowsFormsCars
     public partial class FormWharf : Form
     {
         MultiLevelWharf wharf;
+        FormShipConfig form;
         private const int countLevel = 5;
 
         public FormWharf()
@@ -103,6 +104,28 @@ namespace WindowsFormsCars
         private void listBoxLevels_SelectedIndexChanged (object sender, EventArgs e)
         {
             Draw();
-        }      
+        }
+
+        private void buttonSetShip_Click(object sender, EventArgs e)
+        {
+            form = new FormShipConfig();
+            form.AddEvent(AddShip);
+            form.Show();
+        }
+        private void AddShip(ITransport ship)
+        {
+            if (ship != null && listBoxLevels.SelectedIndex > -1)
+            {
+                int place = wharf[listBoxLevels.SelectedIndex] + ship;
+                if (place > -1)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
     }
 }

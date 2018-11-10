@@ -29,16 +29,13 @@
         private void InitializeComponent()
         {
             this.pictureBoxWharf = new System.Windows.Forms.PictureBox();
-            this.buttonSetSimpleShip = new System.Windows.Forms.Button();
-            this.buttonSetShip = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBoxTakeShip = new System.Windows.Forms.PictureBox();
             this.buttonTakeShip = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.listBoxLevels = new System.Windows.Forms.ListBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonSetShip = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWharf)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakeShip)).BeginInit();
@@ -51,26 +48,6 @@
             this.pictureBoxWharf.Size = new System.Drawing.Size(982, 512);
             this.pictureBoxWharf.TabIndex = 0;
             this.pictureBoxWharf.TabStop = false;
-            // 
-            // buttonSetSimpleShip
-            // 
-            this.buttonSetSimpleShip.Location = new System.Drawing.Point(990, 167);
-            this.buttonSetSimpleShip.Name = "buttonSetSimpleShip";
-            this.buttonSetSimpleShip.Size = new System.Drawing.Size(166, 67);
-            this.buttonSetSimpleShip.TabIndex = 1;
-            this.buttonSetSimpleShip.Text = "Припарковать корабль";
-            this.buttonSetSimpleShip.UseVisualStyleBackColor = true;
-            this.buttonSetSimpleShip.Click += new System.EventHandler(this.buttonSetSimpleShip_Click_1);
-            // 
-            // buttonSetShip
-            // 
-            this.buttonSetShip.Location = new System.Drawing.Point(990, 240);
-            this.buttonSetShip.Name = "buttonSetShip";
-            this.buttonSetShip.Size = new System.Drawing.Size(166, 70);
-            this.buttonSetShip.TabIndex = 2;
-            this.buttonSetShip.Text = "Припарковать корабль-контейнеровоз";
-            this.buttonSetShip.UseVisualStyleBackColor = true;
-            this.buttonSetShip.Click += new System.EventHandler(this.buttonSetShip_Click_1);
             // 
             // groupBox1
             // 
@@ -129,17 +106,24 @@
             this.listBoxLevels.TabIndex = 4;
             this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
             // 
+            // buttonSetShip
+            // 
+            this.buttonSetShip.Location = new System.Drawing.Point(1016, 137);
+            this.buttonSetShip.Name = "buttonSetShip";
+            this.buttonSetShip.Size = new System.Drawing.Size(129, 85);
+            this.buttonSetShip.TabIndex = 5;
+            this.buttonSetShip.Text = "Заказать корабль";
+            this.buttonSetShip.UseVisualStyleBackColor = true;
+            this.buttonSetShip.Click += new System.EventHandler(this.buttonSetShip_Click);
+            // 
             // FormWharf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1158, 557);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonSetShip);
             this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.buttonSetShip);
-            this.Controls.Add(this.buttonSetSimpleShip);
             this.Controls.Add(this.pictureBoxWharf);
             this.Name = "FormWharf";
             this.Text = "FormWorth";
@@ -155,15 +139,12 @@
 
         private System.Windows.Forms.PictureBox pictureBoxWharf;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button buttonSetShip;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonTakeShip;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.PictureBox pictureBoxTakeShip;
-        protected System.Windows.Forms.Button buttonSetSimpleShip;
         private System.Windows.Forms.ListBox listBoxLevels;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonSetShip;
     }
 }
