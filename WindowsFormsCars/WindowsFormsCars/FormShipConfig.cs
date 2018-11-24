@@ -83,7 +83,8 @@ namespace WindowsFormsCars
                 case "Обычный корабль":
                     ship = new SimpleShip(100, 500, Color.White);
                     break;
-                case "Корабль-контейнеровоз": ship = new Ship(100, 500, Color.White, Color.Black);
+                case "Корабль-контейнеровоз":
+                    ship = new Ship(100, 500, Color.White, Color.Black);
                     break;
             }
             DrawShip();
