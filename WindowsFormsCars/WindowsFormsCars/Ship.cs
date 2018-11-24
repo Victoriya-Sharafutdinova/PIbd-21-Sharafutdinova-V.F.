@@ -10,11 +10,12 @@ namespace WindowsFormsCars
     class Ship : SimpleShip
     {
         public Color DopColor { private set; get; }
-        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base (maxSpeed, weight, mainColor)
-        {            
+
+        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base(maxSpeed, weight, mainColor)
+        {
             DopColor = dopColor;
         }
-        
+
         public override void DrawShip(Graphics g)
         {
             base.DrawShip(g);
@@ -48,6 +49,10 @@ namespace WindowsFormsCars
             Point[] curvePoints = { point1, point2, point3, point4 };
             g.FillPolygon(br, curvePoints);
             g.DrawPolygon(pen, curvePoints);
+        }
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
         }
     }
 }

@@ -13,13 +13,14 @@ namespace WindowsFormsCars
     public partial class FormWharf : Form
     {
         MultiLevelWharf wharf;
+        FormShipConfig form;
         private const int countLevel = 5;
 
         public FormWharf()
         {
             InitializeComponent();
             wharf = new MultiLevelWharf(countLevel, pictureBoxWharf.Width, pictureBoxWharf.Height);
-            for(int i = 0; i < countLevel; i++)
+            for (int i = 0; i < countLevel; i++)
             {
                 listBoxLevels.Items.Add("Уровень " + (i + 1));
             }
@@ -28,13 +29,13 @@ namespace WindowsFormsCars
 
         private void Draw()
         {
-            if(listBoxLevels.SelectedIndex > -1)
+            if (listBoxLevels.SelectedIndex > -1)
             {
                 Bitmap bmp = new Bitmap(pictureBoxWharf.Width, pictureBoxWharf.Height);
                 Graphics gr = Graphics.FromImage(bmp);
                 wharf[listBoxLevels.SelectedIndex].Draw(gr);
                 pictureBoxWharf.Image = bmp;
-            }          
+            }
         }
 
         private void buttonSetShip_Click_1(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace WindowsFormsCars
                         Draw();
                     }
                 }
-            }          
+            }
         }
 
         private void buttonSetSimpleShip_Click_1(object sender, EventArgs e)
@@ -68,7 +69,7 @@ namespace WindowsFormsCars
                 {
                     var ship = new SimpleShip(100, 1000, dialog.Color);
                     int place = wharf[listBoxLevels.SelectedIndex] + ship;
-                    if(place == -1)
+                    if (place == -1)
                     {
                         MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -78,7 +79,7 @@ namespace WindowsFormsCars
         }
         private void buttonTakeShip_Click_1(object sender, EventArgs e)
         {
-            if(listBoxLevels.SelectedIndex > -1)
+            if (listBoxLevels.SelectedIndex > -1)
             {
                 if (maskedTextBox1.Text != "")
                 {
@@ -98,11 +99,33 @@ namespace WindowsFormsCars
                     }
                     Draw();
                 }
-            }      
+            }
         }
-        private void listBoxLevels_SelectedIndexChanged (object sender, EventArgs e)
+        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
             Draw();
-        }      
+        }
+
+        private void buttonSetShip_Click(object sender, EventArgs e)
+        {
+            form = new FormShipConfig();
+            form.AddEvent(AddShip);
+            form.Show();
+        }
+        private void AddShip(ITransport ship)
+        {
+            if (ship != null && listBoxLevels.SelectedIndex > -1)
+            {
+                int place = wharf[listBoxLevels.SelectedIndex] + ship;
+                if (place > -1)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
     }
 }

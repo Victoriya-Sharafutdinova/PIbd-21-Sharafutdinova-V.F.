@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WindowsFormsCars
 {
     class SimpleShip : Boat
-    {       
+    {
         protected const int shipWidth = 100;
         protected const int shipHeight = 60;
         public SimpleShip(int maxSpeed, float weight, Color mainColor)
@@ -17,7 +17,7 @@ namespace WindowsFormsCars
             Weight = weight;
             MainColor = mainColor;
         }
-       
+
         public override void MoveTransport(Direction direction)
         {
             float step = MaxSpeed * 100 / Weight;
