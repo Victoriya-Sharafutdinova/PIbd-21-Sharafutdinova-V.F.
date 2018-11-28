@@ -20,7 +20,7 @@ namespace WindowsFormsCars
         {
             InitializeComponent();
             wharf = new MultiLevelWharf(countLevel, pictureBoxWharf.Width, pictureBoxWharf.Height);
-            for (int i = 0; i < countLevel; i++)
+            for(int i = 0; i < countLevel; i++)
             {
                 listBoxLevels.Items.Add("Уровень " + (i + 1));
             }
@@ -29,13 +29,13 @@ namespace WindowsFormsCars
 
         private void Draw()
         {
-            if (listBoxLevels.SelectedIndex > -1)
+            if(listBoxLevels.SelectedIndex > -1)
             {
                 Bitmap bmp = new Bitmap(pictureBoxWharf.Width, pictureBoxWharf.Height);
                 Graphics gr = Graphics.FromImage(bmp);
                 wharf[listBoxLevels.SelectedIndex].Draw(gr);
                 pictureBoxWharf.Image = bmp;
-            }
+            }          
         }
 
         private void buttonSetShip_Click_1(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace WindowsFormsCars
                         Draw();
                     }
                 }
-            }
+            }          
         }
 
         private void buttonSetSimpleShip_Click_1(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace WindowsFormsCars
                 {
                     var ship = new SimpleShip(100, 1000, dialog.Color);
                     int place = wharf[listBoxLevels.SelectedIndex] + ship;
-                    if (place == -1)
+                    if(place == -1)
                     {
                         MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -79,7 +79,7 @@ namespace WindowsFormsCars
         }
         private void buttonTakeShip_Click_1(object sender, EventArgs e)
         {
-            if (listBoxLevels.SelectedIndex > -1)
+            if(listBoxLevels.SelectedIndex > -1)
             {
                 if (maskedTextBox1.Text != "")
                 {
@@ -99,9 +99,9 @@ namespace WindowsFormsCars
                     }
                     Draw();
                 }
-            }
+            }      
         }
-        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxLevels_SelectedIndexChanged (object sender, EventArgs e)
         {
             Draw();
         }
@@ -125,6 +125,36 @@ namespace WindowsFormsCars
                 {
                     MessageBox.Show("Машину не удалось поставить");
                 }
+            }
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (wharf.SaveData(saveFileDialog1.FileName))
+                {
+                    MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (wharf.LoadData(openFileDialog1.FileName))
+                {
+                    MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                { MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                Draw();
             }
         }
     }

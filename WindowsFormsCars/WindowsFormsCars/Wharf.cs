@@ -9,7 +9,7 @@ namespace WindowsFormsCars
 {
     class Wharf<T> where T : class, ITransport
     {
-        private Dictionary<int, T> _places;
+        private Dictionary<int,T> _places;
         private int _maxCount;
         private int PictureWidth { get; set; }
         private int PictureHeight { get; set; }
@@ -32,7 +32,7 @@ namespace WindowsFormsCars
             {
                 if (p.CheckFreePlace(i))
                 {
-                    p._places.Add(i, ship);
+                    p._places.Add(i,ship);
                     p._places[i].SetPosition(10 + i / 5 * p._placeSizeWidth + 5, i % 5 * p._placeSizeHeight + 20, p.PictureWidth, p.PictureHeight);
                     return i;
                 }
@@ -67,19 +67,39 @@ namespace WindowsFormsCars
         private void DrawMarking(Graphics g)
         {
             Pen pen = new Pen(Color.Black, 3);
-            //границы праковки             
             g.DrawRectangle(pen, 0, 0, (_maxCount / 5) * _placeSizeWidth, 480);
             for (int i = 0; i < _maxCount / 5; i++)
-            {//отрисовываем, по 5 мест на линии   
+            {
                 for (int j = 0; j < 6; ++j)
-                {//линия рамзетки места     
-                    g.DrawRectangle(pen, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5);
+                {
+                    g.DrawRectangle(pen, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5 );
                     Brush brGray = new SolidBrush(Color.Gray);
                     g.FillRectangle(brGray, i * _placeSizeWidth, j * _placeSizeHeight, 110, 5);
-                    //g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight, i * _placeSizeWidth + 110, j * _placeSizeHeight);
                 }
                 g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 400);
             }
         }
+
+        public T this[int ind]
+        {
+            get
+            {
+                if (_places.ContainsKey(ind))
+                {
+                    return _places[ind];
+                }
+                return null;
+            }
+
+            set
+            {
+                if (CheckFreePlace(ind))
+                {
+                    _places.Add(ind, value);
+                    _places[ind].SetPosition(10 + ind / 5 * _placeSizeWidth + 5, ind % 5 * _placeSizeHeight + 20, PictureWidth, PictureHeight);
+                }
+            }
+        }
+
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WindowsFormsCars
 {
     class SimpleShip : Boat
-    {
+    {       
         protected const int shipWidth = 100;
         protected const int shipHeight = 60;
         public SimpleShip(int maxSpeed, float weight, Color mainColor)
@@ -16,6 +16,17 @@ namespace WindowsFormsCars
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
+        }
+
+        public SimpleShip(string info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+            }
         }
 
         public override void MoveTransport(Direction direction)
@@ -64,6 +75,10 @@ namespace WindowsFormsCars
             Brush br2 = new SolidBrush(Color.WhiteSmoke);
             g.FillRectangle(br2, _startPosX + 70, _startPosY - 10, 15, 30);
             g.DrawRectangle(pen, _startPosX + 70, _startPosY - 10, 15, 30);
+        }
+        public override string ToString()
+        {
+            return MaxSpeed + ";" + Weight + ";" + MainColor.Name;
         }
     }
 }
