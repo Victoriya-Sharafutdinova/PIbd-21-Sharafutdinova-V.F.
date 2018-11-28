@@ -11,9 +11,21 @@ namespace WindowsFormsCars
     {
         public Color DopColor { private set; get; }
 
-        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base(maxSpeed, weight, mainColor)
-        {
+        public Ship(int maxSpeed, float weight, Color mainColor, Color dopColor) : base (maxSpeed, weight, mainColor)
+        {            
             DopColor = dopColor;
+        }
+
+        public Ship(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 4)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+                DopColor = Color.FromName(strs[3]);
+            }
         }
 
         public override void DrawShip(Graphics g)
@@ -53,6 +65,10 @@ namespace WindowsFormsCars
         public void SetDopColor(Color color)
         {
             DopColor = color;
+        }
+        public override string ToString()
+        {
+            return base.ToString() + ";" + DopColor.Name;
         }
     }
 }

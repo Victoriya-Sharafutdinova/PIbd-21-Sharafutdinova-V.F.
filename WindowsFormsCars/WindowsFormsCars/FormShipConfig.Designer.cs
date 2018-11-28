@@ -150,7 +150,7 @@
             // 
             // panelDarkBlue
             // 
-            this.panelDarkBlue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panelDarkBlue.BackColor = System.Drawing.Color.DarkCyan;
             this.panelDarkBlue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDarkBlue.Location = new System.Drawing.Point(99, 186);
             this.panelDarkBlue.Name = "panelDarkBlue";
@@ -160,7 +160,7 @@
             // 
             // panelGreen
             // 
-            this.panelGreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panelGreen.BackColor = System.Drawing.Color.Chartreuse;
             this.panelGreen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelGreen.Location = new System.Drawing.Point(99, 110);
             this.panelGreen.Name = "panelGreen";
@@ -170,7 +170,7 @@
             // 
             // panelPink
             // 
-            this.panelPink.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panelPink.BackColor = System.Drawing.Color.DeepPink;
             this.panelPink.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPink.Location = new System.Drawing.Point(20, 253);
             this.panelPink.Name = "panelPink";
@@ -180,7 +180,7 @@
             // 
             // panelBlue
             // 
-            this.panelBlue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panelBlue.BackColor = System.Drawing.Color.MediumTurquoise;
             this.panelBlue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelBlue.Location = new System.Drawing.Point(20, 186);
             this.panelBlue.Name = "panelBlue";
@@ -190,7 +190,7 @@
             // 
             // panelYellow
             // 
-            this.panelYellow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panelYellow.BackColor = System.Drawing.Color.LightYellow;
             this.panelYellow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelYellow.Location = new System.Drawing.Point(20, 110);
             this.panelYellow.Name = "panelYellow";
@@ -200,7 +200,7 @@
             // 
             // panelOrange
             // 
-            this.panelOrange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.panelOrange.BackColor = System.Drawing.Color.PeachPuff;
             this.panelOrange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelOrange.Location = new System.Drawing.Point(99, 38);
             this.panelOrange.Name = "panelOrange";
@@ -210,7 +210,7 @@
             // 
             // panelPlum
             // 
-            this.panelPlum.BackColor = System.Drawing.Color.Plum;
+            this.panelPlum.BackColor = System.Drawing.Color.Orchid;
             this.panelPlum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPlum.Location = new System.Drawing.Point(99, 253);
             this.panelPlum.Name = "panelPlum";
@@ -220,7 +220,7 @@
             // 
             // panelRed
             // 
-            this.panelRed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.panelRed.BackColor = System.Drawing.Color.LightPink;
             this.panelRed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelRed.Location = new System.Drawing.Point(20, 38);
             this.panelRed.Name = "panelRed";
