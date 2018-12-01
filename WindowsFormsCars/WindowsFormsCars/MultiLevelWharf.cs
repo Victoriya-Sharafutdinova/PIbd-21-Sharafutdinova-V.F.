@@ -34,7 +34,7 @@ namespace WindowsFormsCars
             }
         }
 
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -48,37 +48,47 @@ namespace WindowsFormsCars
                     WriteToFile("Level" + Environment.NewLine, fs);
                     for (int i = 0; i < countPlaces; i++)
                     {
-                        var ship = level[i];
-                        if (ship != null)
+                        
+                        try
                         {
-                            if (ship.GetType().Name == "SimpleShip")
+                            var ship = level[i];
+                            if (ship != null)
                             {
-                                WriteToFile(i + ":SimpleShip:", fs);
+                                if (ship.GetType().Name == "SimpleShip")
+                                {
+                                    WriteToFile(i + ":SimpleShip:", fs);
+                                }
+                                if (ship.GetType().Name == "Ship")
+                                {
+                                    WriteToFile(i + ":Ship:", fs);
+                                }
+                                WriteToFile(ship + Environment.NewLine, fs);
                             }
-                            if (ship.GetType().Name == "Ship")
-                            {
-                                WriteToFile(i + ":Ship:", fs);
-                            }
-                            WriteToFile(ship + Environment.NewLine, fs);
+                            
                         }
+                        catch (Exception ex)
+                        {
+
+                        }
+                        finally { }
                     }
                 }
             }
-            return true;
         }
 
 
 
-        private void WriteToFile(string text, StreamWriter stream)
+        private void WriteToFile(string text, FileStream stream)
         {
-            stream.Write(text);
+            byte[] info = new UTF8Encoding(true).GetBytes(text);
+            stream.Write(info, 0, info.Length);
         }
 
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             string bufferTextFromFile = "";
             using (FileStream fs = new FileStream(filename, FileMode.Open))
@@ -106,7 +116,7 @@ namespace WindowsFormsCars
             }
             else
             {
-                return false;
+                throw new Exception("Неверный формат файла");
             }
             int counter = -1;
             ITransport ship = null;
@@ -136,7 +146,6 @@ namespace WindowsFormsCars
 
                 parkingStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = ship;
             }
-            return true;
         }
     }
 }

@@ -42,6 +42,8 @@ namespace WindowsFormsCars
             }
         }
 
+
+
         public void AddEvent(shipDelegate ev)
         {
             if (eventAddShip == null)
@@ -128,9 +130,9 @@ namespace WindowsFormsCars
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
-        {
+        {       
             eventAddShip?.Invoke(ship);
-            Close();
+            Close();   
         }
     }
 }
