@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,9 +17,14 @@ namespace WindowsFormsCars
         FormShipConfig form;
         private const int countLevel = 5;
 
+        private Logger logger;
+
         public FormWharf()
         {
             InitializeComponent();
+
+            logger = LogManager.GetCurrentClassLogger();
+
             wharf = new MultiLevelWharf(countLevel, pictureBoxWharf.Width, pictureBoxWharf.Height);
             for(int i = 0; i < countLevel; i++)
             {
@@ -83,21 +89,29 @@ namespace WindowsFormsCars
             {
                 if (maskedTextBox1.Text != "")
                 {
-                    var ship = wharf[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBox1.Text);
-                    if (ship != null)
+                    try
                     {
+                        var ship = wharf[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBox1.Text);
                         Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
                         Graphics gr = Graphics.FromImage(bmp);
                         ship.SetPosition(5, 15, pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
                         ship.DrawShip(gr);
                         pictureBoxTakeShip.Image = bmp;
+
+                        logger.Info("Изъят корабль " + ship.ToString() + " с места " + maskedTextBox1.Text);
+
+                        Draw();
                     }
-                    else
+                    catch (WharfNotFoundException ex)
                     {
+                        MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
                         pictureBoxTakeShip.Image = bmp;
                     }
-                    Draw();
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }      
         }
@@ -114,31 +128,41 @@ namespace WindowsFormsCars
         }
         private void AddShip(ITransport ship)
         {
+            
             if (ship != null && listBoxLevels.SelectedIndex > -1)
             {
-                int place = wharf[listBoxLevels.SelectedIndex] + ship;
-                if (place > -1)
+                try
                 {
+                    int place = wharf[listBoxLevels.SelectedIndex] + ship;
+                    logger.Info("Добавлен корабль " + ship.ToString() + " на место " + place);
                     Draw();
                 }
-                else
+                catch (WharfOverflowException ex)
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    MessageBox.Show("Корабль не удалось поставить");
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
+            
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (wharf.SaveData(saveFileDialog1.FileName))
+                try
                 {
+                    wharf.SaveData(saveFileDialog1.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " + saveFileDialog1.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -147,12 +171,19 @@ namespace WindowsFormsCars
         {
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (wharf.LoadData(openFileDialog1.FileName))
+                try
                 {
+                    wharf.LoadData(openFileDialog1.FileName);
                     MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + openFileDialog1.FileName);
                 }
-                else
-                { MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (WharfOccupiedPlaceException ex)
+                {
+                    MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Draw();
             }
