@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsCars
 {
-    class Ship : SimpleShip
+    class Ship : SimpleShip, IComparable<Ship>, IEquatable<Ship>
     {
         public Color DopColor { private set; get; }
 
@@ -69,6 +69,55 @@ namespace WindowsFormsCars
         public override string ToString()
         {
             return base.ToString() + ";" + DopColor.Name;
+        }
+
+        public int CompareTo(Ship other)
+        {
+            var res = (this is SimpleShip).CompareTo(other is SimpleShip);
+            if (res != 0)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                DopColor.Name.CompareTo(other.DopColor.Name);
+            }
+            return 0;
+        }
+
+        public bool Equals(Ship other)
+        {
+            var res = (this is SimpleShip).Equals(other is SimpleShip);
+            if (!res)
+            {
+                return res;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            Ship shipObj = obj as Ship;
+            if (shipObj == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(shipObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

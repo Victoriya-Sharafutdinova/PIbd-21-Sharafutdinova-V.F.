@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Collections;
 
 namespace WindowsFormsCars
 {
-    class Wharf<T> where T : class, ITransport
+    class Wharf<T> : IEnumerator<T>, IEnumerable<T>, IComparable<Wharf<T>>
+        where T : class, ITransport
     {
         private Dictionary<int,T> _places;
         private int _maxCount;
@@ -15,10 +17,21 @@ namespace WindowsFormsCars
         private int PictureHeight { get; set; }
         private int _placeSizeWidth = 210;
         private int _placeSizeHeight = 80;
+        private int _currentIndex;
+
+        public int GetKey
+        {
+            get
+            {
+                return _places.Keys.ToList()[_currentIndex];
+            }
+        }
+
         public Wharf(int sizes, int pictureWidth, int pictureHeight)
         {
             _maxCount = sizes;
             _places = new Dictionary<int, T>();
+            _currentIndex = -1;
             PictureWidth = pictureWidth;
             PictureHeight = pictureHeight;
         }
@@ -27,6 +40,10 @@ namespace WindowsFormsCars
             if (p._places.Count == p._maxCount)
             {
                 throw new WharfOverflowException();
+            }
+            if (p._places.ContainsValue(ship))
+            {
+                throw new ParkingAlreadyHaveException();
             }
             for (int i = 0; i < p._maxCount; i++)
             {
@@ -58,10 +75,9 @@ namespace WindowsFormsCars
         public void Draw(Graphics g)
         {
             DrawMarking(g);
-            var keys = _places.Keys.ToList();
-            for (int i = 0; i < keys.Count; i++)
+            foreach (var ship in _places)
             {
-                _places[keys[i]].DrawShip(g);
+                ship.Value.DrawShip(g);
             }
         }
         private void DrawMarking(Graphics g)
@@ -106,6 +122,88 @@ namespace WindowsFormsCars
                 }
             }
         }
+        public T Current
+        {
+            get
+            {
+                return _places[_places.Keys.ToList()[_currentIndex]];
+            }
+        }
 
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public void Dispose()
+        {
+            _places.Clear();
+        }
+        
+        public bool MoveNext()
+        {         
+            if (_currentIndex + 1 >= _places.Count)
+            {
+                Reset();
+                return false;
+            }
+            _currentIndex++;
+            return true;
+        }
+
+        public void Reset()
+        {
+            _currentIndex = -1;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public int CompareTo(Wharf<T> other)
+        {
+            if(_places.Count > other._places.Count)
+            {
+                return -1;
+            }
+            else if(_places.Count < other._places.Count)
+            {
+                return 1;
+            }
+            else if(_places.Count > 0)
+            {
+                var thisKeys = _places.Keys.ToList();
+                var otherKeys = other._places.Keys.ToList();
+                for (int i =0; i < _places.Count ; ++i)
+                {
+                    if(_places[thisKeys[i]] is SimpleShip && other._places[thisKeys[i]] is Ship)
+                    {
+                        return 1;
+                    }
+                    if (_places[thisKeys[i]] is Ship && other._places[thisKeys[i]] is SimpleShip)
+                    {
+                        return -1;
+                    }
+                    if (_places[thisKeys[i]] is SimpleShip && other._places[thisKeys[i]] is SimpleShip)
+                    {
+                        return (_places[thisKeys[i]] is SimpleShip).CompareTo(other._places[thisKeys[i]] is SimpleShip); ;
+                    }
+                    if (_places[thisKeys[i]] is Ship && other._places[thisKeys[i]] is Ship)
+                    {
+                        return (_places[thisKeys[i]] is Ship).CompareTo(other._places[thisKeys[i]] is Ship); ;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

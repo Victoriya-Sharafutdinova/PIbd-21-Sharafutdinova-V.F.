@@ -139,7 +139,11 @@ namespace WindowsFormsCars
                 }
                 catch (WharfOverflowException ex)
                 {
-                    MessageBox.Show("Корабль не удалось поставить");
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (ParkingAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -187,6 +191,13 @@ namespace WindowsFormsCars
                 }
                 Draw();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            wharf.Sort();
+            Draw();
+            logger.Info("Сортировка уровней");
         }
     }
 }
