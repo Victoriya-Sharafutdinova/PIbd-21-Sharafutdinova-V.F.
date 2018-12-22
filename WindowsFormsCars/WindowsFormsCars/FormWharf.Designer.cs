@@ -42,6 +42,7 @@
             this.загрузитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWharf)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTakeShip)).BeginInit();
@@ -117,7 +118,7 @@
             // 
             this.buttonSetShip.Location = new System.Drawing.Point(1011, 196);
             this.buttonSetShip.Name = "buttonSetShip";
-            this.buttonSetShip.Size = new System.Drawing.Size(129, 85);
+            this.buttonSetShip.Size = new System.Drawing.Size(135, 53);
             this.buttonSetShip.TabIndex = 5;
             this.buttonSetShip.Text = "Заказать корабль";
             this.buttonSetShip.UseVisualStyleBackColor = true;
@@ -166,11 +167,22 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "txt file | *.txt";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1013, 261);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(131, 39);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Сортировать";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // FormWharf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1158, 557);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonSetShip);
             this.Controls.Add(this.listBoxLevels);
             this.Controls.Add(this.groupBox1);
@@ -207,5 +219,6 @@
         private System.Windows.Forms.ToolStripMenuItem загрузитьToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button2;
     }
 }

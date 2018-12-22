@@ -17,6 +17,8 @@ namespace WindowsFormsCars
         public MultiLevelWharf(int countStages, int pictureWidth, int pictureHeight)
         {
             parkingStages = new List<Wharf<ITransport>>();
+            this.pictureHeight = pictureHeight;
+            this.pictureWidth = pictureWidth;
             for (int i = 0; i < countStages; ++i)
             {
                 parkingStages.Add(new Wharf<ITransport>(countPlaces, pictureWidth, pictureHeight));
@@ -46,31 +48,18 @@ namespace WindowsFormsCars
                 foreach (var level in parkingStages)
                 {
                     WriteToFile("Level" + Environment.NewLine, fs);
-                    for (int i = 0; i < countPlaces; i++)
+                    foreach (ITransport ship in level)
                     {
-                        
-                        try
-                        {
-                            var ship = level[i];
-                            if (ship != null)
-                            {
-                                if (ship.GetType().Name == "SimpleShip")
-                                {
-                                    WriteToFile(i + ":SimpleShip:", fs);
-                                }
-                                if (ship.GetType().Name == "Ship")
-                                {
-                                    WriteToFile(i + ":Ship:", fs);
-                                }
-                                WriteToFile(ship + Environment.NewLine, fs);
-                            }
-                            
-                        }
-                        catch (Exception ex)
-                        {
 
+                        if (ship.GetType().Name == "SimpleShip")
+                        {
+                            WriteToFile(level.GetKey + ":SimpleShip:", fs);
                         }
-                        finally { }
+                        if (ship.GetType().Name == "Ship")
+                        {
+                            WriteToFile(level.GetKey + ":Ship:", fs);
+                        }
+                        WriteToFile(ship + Environment.NewLine, fs);
                     }
                 }
             }
@@ -119,12 +108,14 @@ namespace WindowsFormsCars
                 throw new Exception("Неверный формат файла");
             }
             int counter = -1;
+            int counterShip = 0;
             ITransport ship = null;
             for (int i = 1; i < strs.Length; ++i)
             {
                 if (strs[i] == "Level")
                 {
                     counter++;
+                    counterShip = 0;
                     parkingStages.Add(new Wharf<ITransport>(countPlaces, pictureWidth, pictureHeight));
                     continue;
                 }
@@ -144,8 +135,14 @@ namespace WindowsFormsCars
                     ship = new Ship(strs[i].Split(':')[2]);
                 }
 
-                parkingStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = ship;
+                parkingStages[counter][counterShip++] = ship;
             }
+        }
+        public void Sort()
+        {
+            parkingStages.Sort();
+
+            
         }
     }
 }
